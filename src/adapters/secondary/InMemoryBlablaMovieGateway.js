@@ -3,6 +3,8 @@ import { of } from 'rxjs'
 export class InMemoryBlablaMovieGateway {
   constructor(movies = []) {
     this.nextId = 0
+    this.nextUserId = 0
+    this.users = []
     this.setMovies(movies)
   }
 
@@ -33,6 +35,13 @@ export class InMemoryBlablaMovieGateway {
       ...this.movies.slice(movieIndex + 1)
     ]
     return of(this.movies)
+  }
+
+  registerUser({ username, password }) {
+    const userId = this.nextUserId++
+    const newUser = { username, password, id: userId }
+    this.users = [...this.users, newUser]
+    return of(newUser)
   }
 
   fetchMovies() {
