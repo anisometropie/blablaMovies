@@ -1,4 +1,4 @@
-import { of } from 'rxjs'
+import { of, throwError } from 'rxjs'
 
 export class InMemoryBlablaMovieGateway {
   constructor(movies = []) {
@@ -42,6 +42,17 @@ export class InMemoryBlablaMovieGateway {
     const newUser = { username, password, id: userId }
     this.users = [...this.users, newUser]
     return of(newUser)
+  }
+
+  loginUser({ username, password }) {
+    const user = this.users.find(
+      u => u.username === username && u.password === password
+    )
+    if (user) {
+      return of(user)
+    } else {
+      return throwError(new Error('User not found'))
+    }
   }
 
   fetchMovies() {
