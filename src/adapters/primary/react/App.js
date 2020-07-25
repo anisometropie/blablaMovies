@@ -1,6 +1,9 @@
 import React from 'react'
+import { Route, Switch } from 'react-router-dom'
 
-import MoviesList from './MoviesList'
+import Navigation from './components/Navigation'
+import Home from './components/Home'
+import MoviesList from './components/MoviesList'
 
 // La société BlablaMovie souhaite donner la parole aux internautes en leur
 // permettant de choisir le film qu'ils préfèrent. Chaque utilisateur peut
@@ -8,8 +11,14 @@ import MoviesList from './MoviesList'
 
 function App() {
   return (
-    <div>
-      <MoviesList />
+    <div className="App">
+      <Navigation />
+      <Switch>
+        <Route path="/login" exact render={() => <div>Login</div>} />
+        <Route path="/register" exact render={() => <div>Register</div>} />
+        <Route path="/votes" exact render={() => <MoviesList />} />
+        <Route path="/" exact render={Home} />
+      </Switch>
     </div>
   )
 }
