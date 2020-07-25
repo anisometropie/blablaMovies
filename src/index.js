@@ -7,7 +7,9 @@ import { createReduxStore } from 'store/reduxStore'
 import { InMemoryBlablaMovieGateway } from 'adapters/secondary/InMemoryBlablaMovieGateway'
 import App from 'adapters/primary/react/App'
 
-const moviesGateway = new InMemoryBlablaMovieGateway()
+import Tarantino from './Tarantino.json'
+
+const moviesGateway = new InMemoryBlablaMovieGateway(Tarantino)
 const store = createReduxStore({
   moviesGateway
 })

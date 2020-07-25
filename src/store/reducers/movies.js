@@ -20,9 +20,9 @@ export default (state = defaultState, action = {}) => {
 }
 
 const getState = state => state.movies
-const getAllUsers = state => getState(state).allUsers
+const getAllMoviesTitles = state => getState(state).map(m => m.title)
 
 export const selectors = {
   getState,
-  getAllUsers
+  getAllMoviesTitles
 }
