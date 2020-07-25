@@ -22,6 +22,7 @@ describe('fetch movies', () => {
       fetchMovies()
       expectMoviesState([
         {
+          id: 0,
           title: 'Once Upon a Time in Hollywood',
           infos: { Title: 'Once Upon a Time in Hollywood' },
           votes: []
@@ -34,11 +35,13 @@ describe('fetch movies', () => {
       fetchMovies()
       expectMoviesState([
         {
+          id: 0,
           title: 'Abc',
           infos: { Title: 'Abc' },
           votes: []
         },
         {
+          id: 1,
           title: 'Efg',
           infos: { Title: 'Efg' },
           votes: []
