@@ -1,8 +1,46 @@
 import {
+  createRequestActions,
   makeActionsName,
   generateCode,
   parseErrorMessage
 } from '../requestActions'
+
+describe('createRequestActions', () => {
+  describe('requestedAction function', () => {
+    it('should create an action with type and payload', () => {
+      const { fetchRequested } = createRequestActions('FETCH')
+      expect(fetchRequested({ famille: 'Polygonaceae' })).toEqual({
+        type: 'FETCH_REQUESTED',
+        payload: {
+          famille: 'Polygonaceae'
+        }
+      })
+    })
+    it('should create an action with type only', () => {
+      const { fetchRequested } = createRequestActions('FETCH')
+      expect(fetchRequested()).toEqual({
+        type: 'FETCH_REQUESTED'
+      })
+    })
+  })
+  describe('succeedAction function', () => {
+    it('should create an action with type and payload', () => {
+      const { fetchSucceeded } = createRequestActions('FETCH')
+      expect(fetchSucceeded({ famille: 'Polygonaceae' })).toEqual({
+        type: 'FETCH_SUCCEEDED',
+        payload: {
+          famille: 'Polygonaceae'
+        }
+      })
+    })
+    it('should create an action with type only', () => {
+      const { fetchSucceeded } = createRequestActions('FETCH')
+      expect(fetchSucceeded()).toEqual({
+        type: 'FETCH_SUCCEEDED'
+      })
+    })
+  })
+})
 
 describe('makeActionsName', () => {
   it('should return an object with correct names', () => {

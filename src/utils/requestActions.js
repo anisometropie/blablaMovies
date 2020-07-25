@@ -14,16 +14,21 @@ export const createRequestActions = prefix => {
         ? {
             type: requestedAction,
             payload: {
-              data
+              ...data
             }
           }
         : { type: requestedAction },
-    [camelCase(succeedAction)]: data => ({
-      type: succeedAction,
-      payload: {
-        data
-      }
-    }),
+    [camelCase(succeedAction)]: data =>
+      data
+        ? {
+            type: succeedAction,
+            payload: {
+              ...data
+            }
+          }
+        : {
+            type: succeedAction
+          },
     [camelCase(failedAction)]: err => ({ type: failedAction, meta: err }),
     [`${camelCase(prefix)}RequestStateReducer`]: makeRequestStateReducer(
       requestedAction,
