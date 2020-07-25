@@ -20,6 +20,21 @@ export class InMemoryBlablaMovieGateway {
     }
   }
 
+  voteForMovie({ movieId, rating, user }) {
+    const movie = this.movies.find(m => m.id === movieId)
+    const movieIndex = this.movies.indexOf(movie)
+    const editedMovie = {
+      ...movie,
+      votes: [...movie.votes, { userId: user.id, rating }]
+    }
+    this.movies = [
+      ...this.movies.slice(0, movieIndex),
+      editedMovie,
+      ...this.movies.slice(movieIndex + 1)
+    ]
+    return of(this.movies)
+  }
+
   fetchMovies() {
     return of(this.movies)
   }
