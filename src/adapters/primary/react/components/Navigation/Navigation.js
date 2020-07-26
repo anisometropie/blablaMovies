@@ -61,6 +61,11 @@ function DashboardNavigation() {
         </Link>
       </li>
       <li className={classes.item}>
+        <Link className={classes.link} to="/admin">
+          Admin
+        </Link>
+      </li>
+      <li className={classes.item}>
         <Link className={classes.link} to="/votes">
           Votes
         </Link>
