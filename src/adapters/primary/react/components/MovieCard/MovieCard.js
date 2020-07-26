@@ -1,20 +1,11 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { Paper, Dialog, Button } from '@material-ui/core'
+import { Dialog, Button } from '@material-ui/core'
+
 import MovieDetails from '../MovieDetails'
+import Card from '../../base.ui/Card'
 
 const useStyles = makeStyles({
-  root: {
-    margin: '7px',
-    padding: '15px',
-    border: '0.5px grey solid',
-    borderRadius: '10px',
-    color: 'white',
-    backgroundColor: 'rgba(30, 20, 30, 0.75)',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start'
-  },
   image: {
     cursor: 'pointer'
   },
@@ -29,7 +20,7 @@ function MovieCard({ movie, onVote }) {
   const { infos } = movie
   return (
     <React.Fragment>
-      <Paper className={classes.root}>
+      <Card>
         <img
           className={classes.image}
           onClick={onVote}
@@ -41,7 +32,7 @@ function MovieCard({ movie, onVote }) {
         <Button className={classes.button} onClick={toggleDialog(true)}>
           Plus d’infos
         </Button>
-      </Paper>
+      </Card>
       <Dialog maxWidth="lg" open={showDetails} onClose={toggleDialog(false)}>
         <MovieDetails movie={infos} onVote={onVote} />
       </Dialog>
