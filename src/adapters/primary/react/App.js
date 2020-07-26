@@ -30,7 +30,7 @@ function App() {
         <Route path="/login" exact render={() => <LogIn />} />
         <Route path="/register" exact render={() => <Register />} />
         <Route path="/votes" exact render={() => <MoviesList />} />
-        <Route path="/" exact render={Home} />
+        <Route path="/" exact render={() => <Home />} />
       </Switch>
     </div>
   )

@@ -1,18 +1,44 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { makeStyles } from '@material-ui/core/styles'
+import { isEmpty } from 'lodash'
 
 import {
   selectors as moviesSelectors,
   fetchMoviesRequested
 } from 'store/reducers/movies'
 
-export default function Home() {
+import Card from '../../base.ui/Card'
+import CurrentRanking from '../CurrentRanking'
+import logo from 'assets/logo.png'
+
+const useStyles = makeStyles({
+  logo: { alignSelf: 'center' }
+})
+
+function Home() {
+  const movies = useSelector(moviesSelectors.getState)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    if (isEmpty(movies)) {
+      dispatch(fetchMoviesRequested())
+    }
+  }, [movies])
+
+  const classes = useStyles()
   return (
-    <div>
-      <h1>BlablaMovie</h1>
-      <div>Votez pour votre film préféré</div>
-      <div>cette semaine</div>
-      <div>Film le mieux noté</div>
-    </div>
+    <React.Fragment>
+      <Card>
+        <img className={classes.logo} src={logo} alt="" />
+        <div>Chaque semaine, votez pour vos films préférés</div>
+        <p>
+          Vous pouvez sélectionner trois films. Au bout d’une semaine, les
+          résultats sont annoncés.
+        </p>
+      </Card>
+      <CurrentRanking movies={movies} />
+    </React.Fragment>
   )
 }
+
+export default Home
