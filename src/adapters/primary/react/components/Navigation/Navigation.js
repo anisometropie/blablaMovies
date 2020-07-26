@@ -9,7 +9,7 @@ import {
   logoutUser
 } from 'store/reducers/loggedUser'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   navigationBar: {
     width: '100%',
     boxSizing: 'border-box',
@@ -17,11 +17,23 @@ const useStyles = makeStyles({
     backgroundColor: '#F2FFF9',
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    [theme.breakpoints.down(600)]: {
+      justifyContent: 'center'
+    },
+    [theme.breakpoints.down(470)]: {
+      flexDirection: 'column'
+    }
   },
   item: {
     listStyle: 'none',
-    margin: '0 16px'
+    margin: '0 16px',
+    [theme.breakpoints.between(470, 600)]: {
+      margin: '0 6px'
+    },
+    [theme.breakpoints.between(500, 600)]: {
+      margin: '0 10px'
+    }
   },
   link: {
     color: 'black',
@@ -31,7 +43,7 @@ const useStyles = makeStyles({
     },
     cursor: 'pointer'
   }
-})
+}))
 
 function DashboardNavigation() {
   const loggedUser = useSelector(loggedUserSelectors.getState)

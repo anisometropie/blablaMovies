@@ -5,18 +5,20 @@ import { TextField, Button } from '@material-ui/core'
 
 import Card from '../../base.ui/Card'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   root: {
     alignItems: 'center'
   },
   form: {
-    minWidth: '350px',
-    width: '400px',
+    minWidth: '400px',
     padding: '10px 0',
     borderRadius: '10px',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
+    [theme.breakpoints.down(470)]: {
+      minWidth: '250px'
+    }
   },
   textField: {
     width: '250px',
@@ -29,7 +31,7 @@ const useStyles = makeStyles({
     color: 'white',
     width: '100px'
   }
-})
+}))
 
 function UserForm({ title, onSubmit }) {
   const classes = useStyles()
