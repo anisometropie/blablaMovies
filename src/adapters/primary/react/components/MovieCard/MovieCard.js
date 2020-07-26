@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 })
 
 function MovieCard({ movie, onVote }) {
-  const user = useSelector(loggedUserSelectors.getState)
+  const user = useSelector(loggedUserSelectors.getUserInfos)
   const [showDetails, setShowDetails] = useState(false)
   const classes = useStyles()
   const toggleDialog = state => () => setShowDetails(state)

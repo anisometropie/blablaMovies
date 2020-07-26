@@ -79,7 +79,7 @@ class MoviesList extends React.Component {
 
 const mapStateToProps = state => ({
   movies: moviesSelectors.getState(state),
-  user: loggedUserSelectors.getState(state)
+  user: loggedUserSelectors.getUserInfos(state)
 })
 
 const mapDispatchToProps = dispatch => ({

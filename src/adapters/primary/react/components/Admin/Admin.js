@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import { TextField, Button } from '@material-ui/core'
 
-import { selectors as loggedUserSelectors } from 'store/reducers/loggedUser'
 import { selectors as moviesSelectors } from 'store/reducers/movies'
 import { addMovieRequested } from 'store/reducers/movies'
 
@@ -46,7 +45,6 @@ function Admin() {
 
   const [movieTitle, setMovieTitle] = useState('')
   const [openSnackBar, setOpenSnackBar] = useState(false)
-  const user = useSelector(loggedUserSelectors.getState)
   const movies = useSelector(moviesSelectors.getAllMoviesTitles)
   const handleAddMovie = movieTitle => {
     if (

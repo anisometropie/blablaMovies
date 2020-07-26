@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function DashboardNavigation() {
-  const loggedUser = useSelector(loggedUserSelectors.getState)
+  const loggedUser = useSelector(loggedUserSelectors.getUserInfos)
   const classes = useStyles()
   const dispatch = useDispatch()
   const handleLogout = () => {
