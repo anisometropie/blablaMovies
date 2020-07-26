@@ -1,6 +1,7 @@
 import { createReduxStore } from 'store/reduxStore'
 import { InMemoryBlablaMovieGateway } from 'adapters/secondary/InMemoryBlablaMovieGateway'
 import { registerUserRequested, defaultState } from 'store/reducers/loggedUser'
+import { requestStates } from 'utils/requestStates'
 
 describe('registerUser', () => {
   let store
@@ -12,7 +13,11 @@ describe('registerUser', () => {
       const user = { username: 'Michou', password: 'γ' }
       initializeTest()
       registerUser(user)
-      expectUserState({ username: 'Michou', password: 'γ', id: 0, votes: [] })
+      expectUserState({
+        infos: { username: 'Michou', password: 'γ', id: 0, votes: [] },
+        requestState: requestStates.SUCCESS,
+        errorMessage: ''
+      })
     })
   })
 

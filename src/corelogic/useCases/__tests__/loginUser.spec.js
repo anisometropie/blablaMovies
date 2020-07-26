@@ -5,6 +5,7 @@ import {
   loginUserSucceeded,
   defaultState
 } from 'store/reducers/loggedUser'
+import { requestStates } from 'utils/requestStates'
 
 describe('loginUser', () => {
   let store
@@ -17,7 +18,11 @@ describe('loginUser', () => {
       const users = [{ ...user, id: 666 }]
       initializeTest(users)
       loginUser(user)
-      expectUserState({ username: 'Michou', password: 'γ', id: 666 })
+      expectUserState({
+        infos: { username: 'Michou', password: 'γ', id: 666 },
+        requestState: requestStates.SUCCESS,
+        errorMessage: ''
+      })
     })
     it('should reset loggedUser as defaultState if user do not exist', () => {
       const users = [{ username: 'Michou', password: 'γ', id: 666 }]
@@ -25,7 +30,11 @@ describe('loginUser', () => {
       loginUser({ username: 'Michou', password: 'γ' })
 
       loginUser({ username: 'Alfred', password: 'γ' })
-      expectUserState(defaultState)
+      expectUserState({
+        ...defaultState,
+        requestState: requestStates.FAILED,
+        errorMessage: 'User not found'
+      })
     })
   })
 

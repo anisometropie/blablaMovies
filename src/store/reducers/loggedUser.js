@@ -26,26 +26,49 @@ export const logoutUser = () => ({
   type: LOGOUT_USER
 })
 
-export const defaultState = {}
+export const defaultState = { infos: {}, requestState: '' }
 export default (state = defaultState, action = {}) => {
   switch (action.type) {
     case REGISTER_USER_SUCCEEDED:
+      return {
+        infos: action.payload.user,
+        requestState: registerUserRequestStateReducer(state, action),
+        errorMessage: ''
+      }
     case LOGIN_USER_SUCCEEDED:
-      return action.payload.user
+      return {
+        infos: action.payload.user,
+        requestState: loginUserRequestStateReducer(state, action),
+        errorMessage: ''
+      }
     case LOGIN_USER_FAILED:
+      return {
+        ...defaultState,
+        requestState: loginUserRequestStateReducer(state, action),
+        errorMessage: action.meta.error
+      }
     case LOGOUT_USER:
       return defaultState
     case VOTE_FOR_MOVIE_SUCCEEDED:
       const { movieId } = action.payload
-      const previousVotes = state.votes ?? []
-      return { ...state, votes: [...previousVotes, { movieId }] }
+      const previousVotes = state.infos.votes ?? []
+      return {
+        ...state,
+        infos: { ...state.infos, votes: [...previousVotes, { movieId }] }
+      }
     default:
       return state
   }
 }
 
 const getState = state => state.loggedUser
+const getUserInfos = state => getState(state).infos
+const getRequestState = state => getState(state).requestState
+const getErrorMessage = state => getState(state).errorMessage
 
 export const selectors = {
-  getState
+  getState,
+  getUserInfos,
+  getRequestState,
+  getErrorMessage
 }

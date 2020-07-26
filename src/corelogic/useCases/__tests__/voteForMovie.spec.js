@@ -6,7 +6,10 @@ import {
   defaultState
 } from 'store/reducers/movies'
 
-import { loginUserSucceeded } from 'store/reducers/loggedUser'
+import {
+  loginUserSucceeded,
+  selectors as loggedUserSelectors
+} from 'store/reducers/loggedUser'
 
 describe('voteForMovie', () => {
   let store
@@ -100,6 +103,7 @@ describe('voteForMovie', () => {
   }
 
   const expectUserState = loggedUserState => {
-    expect(store.getState().loggedUser).toEqual(loggedUserState)
+    const state = store.getState()
+    expect(loggedUserSelectors.getUserInfos(state)).toEqual(loggedUserState)
   }
 })

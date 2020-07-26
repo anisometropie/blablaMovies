@@ -17,7 +17,7 @@ describe('Logout user', () => {
       initializeTest()
       store.dispatch(loginUserSucceeded({ user }))
       store.dispatch(logoutUser())
-      expectUserState({})
+      expectUserState(defaultState)
     })
   })
 
