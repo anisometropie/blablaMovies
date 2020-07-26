@@ -44,6 +44,8 @@ export class InMemoryBlablaMovieGateway {
   voteForMovie({ movieId, user }) {
     const movie = this.movies.find(m => m.id === movieId)
     const movieIndex = this.movies.indexOf(movie)
+    const userInBase = this.users.find(u => u.id === user.id)
+    const userIndex = this.users.indexOf(userInBase)
     if (!this.hasUserAlreadyVoted(movie, user)) {
       const editedMovie = {
         ...movie,
@@ -53,6 +55,15 @@ export class InMemoryBlablaMovieGateway {
         ...this.movies.slice(0, movieIndex),
         editedMovie,
         ...this.movies.slice(movieIndex + 1)
+      ]
+      const editedUser = {
+        ...userInBase,
+        votes: [...userInBase.votes, { movieId }]
+      }
+      this.users = [
+        ...this.users.slice(0, userIndex),
+        editedUser,
+        ...this.users.slice(userIndex + 1)
       ]
       return of(this.movies)
     } else {
