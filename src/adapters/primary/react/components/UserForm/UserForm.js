@@ -3,13 +3,16 @@ import { makeStyles } from '@material-ui/core/styles'
 import { useSelector } from 'react-redux'
 import { TextField, Button } from '@material-ui/core'
 
+import Card from '../../base.ui/Card'
+
 const useStyles = makeStyles({
   root: {
+    alignItems: 'center'
+  },
+  form: {
     minWidth: '350px',
     width: '400px',
-    backgroundColor: 'rgba(30, 20, 30, 0.75)',
-    color: 'white',
-    padding: '50px',
+    padding: '10px 0',
     borderRadius: '10px',
     display: 'flex',
     flexDirection: 'column',
@@ -34,9 +37,9 @@ function UserForm({ title, onSubmit }) {
   const [password, setPassword] = useState('')
 
   return (
-    <div>
-      <form className={classes.root} autoComplete="off">
-        <h2>Créer un compte</h2>
+    <Card className={classes.root}>
+      <form className={classes.form} autoComplete="off">
+        <h2>{title}</h2>
         <TextField
           className={classes.textField}
           InputProps={{
@@ -64,16 +67,16 @@ function UserForm({ title, onSubmit }) {
             setPassword(e.target.value)
           }}
         />
-        <Button
-          className={classes.button}
-          onClick={() => {
-            onSubmit({ username, password })
-          }}
-        >
-          Valider
-        </Button>
       </form>
-    </div>
+      <Button
+        className={classes.button}
+        onClick={() => {
+          onSubmit({ username, password })
+        }}
+      >
+        Valider
+      </Button>
+    </Card>
   )
 }
 
