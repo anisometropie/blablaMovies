@@ -22,24 +22,33 @@ export class InMemoryBlablaMovieGateway {
     }
   }
 
-  voteForMovie({ movieId, rating, user }) {
+  voteForMovie({ movieId, user }) {
     const movie = this.movies.find(m => m.id === movieId)
     const movieIndex = this.movies.indexOf(movie)
-    const editedMovie = {
-      ...movie,
-      votes: [...movie.votes, { userId: user.id, rating }]
+    if (!this.hasUserAlreadyVoted(movie, user)) {
+      const editedMovie = {
+        ...movie,
+        votes: [...movie.votes, { userId: user.id }]
+      }
+      this.movies = [
+        ...this.movies.slice(0, movieIndex),
+        editedMovie,
+        ...this.movies.slice(movieIndex + 1)
+      ]
+      return of(this.movies)
+    } else {
+      return throwError(new Error('User has already voted for this movie'))
     }
-    this.movies = [
-      ...this.movies.slice(0, movieIndex),
-      editedMovie,
-      ...this.movies.slice(movieIndex + 1)
-    ]
-    return of(this.movies)
+  }
+
+  hasUserAlreadyVoted(movie, user) {
+    const previousVote = movie.votes.find(v => v.userId === user.id)
+    return previousVote !== undefined
   }
 
   registerUser({ username, password }) {
     const userId = this.nextUserId++
-    const newUser = { username, password, id: userId }
+    const newUser = { username, password, id: userId, votes: [] }
     this.users = [...this.users, newUser]
     return of(newUser)
   }

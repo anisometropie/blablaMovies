@@ -6,6 +6,8 @@ import {
   defaultState
 } from 'store/reducers/movies'
 
+import { loginUserSucceeded } from 'store/reducers/loggedUser'
+
 describe('voteForMovie', () => {
   let store
   let moviesGateway
@@ -16,13 +18,13 @@ describe('voteForMovie', () => {
       const movies = [{ Title: 'Once Upon a Time in Hollywood' }]
       const user = { name: 'Michou', id: 489 }
       initializeTest(movies)
-      voteForMovie({ movieId: 0, rating: 5, user })
+      voteForMovie({ movieId: 0, user })
       expectMoviesState([
         {
           id: 0,
           title: 'Once Upon a Time in Hollywood',
           infos: { Title: 'Once Upon a Time in Hollywood' },
-          votes: [{ userId: 489, rating: 5 }]
+          votes: [{ userId: 489 }]
         }
       ])
     })
@@ -35,7 +37,7 @@ describe('voteForMovie', () => {
       ]
       const user = { name: 'Michou', id: 489 }
       initializeTest(movies)
-      voteForMovie({ movieId: 2, rating: 1, user })
+      voteForMovie({ movieId: 2, user })
       expectMoviesState([
         {
           id: 0,
@@ -48,10 +50,27 @@ describe('voteForMovie', () => {
           id: 2,
           title: 'Reservoir Dog',
           infos: { Title: 'Reservoir Dog' },
-          votes: [{ userId: 489, rating: 1 }]
+          votes: [{ userId: 489 }]
         },
         { id: 3, title: 'X files', infos: { Title: 'X files' }, votes: [] }
       ])
+    })
+    it('should update user number of votes', () => {
+      const movies = [{ Title: 'Once Upon a Time in Hollywood' }]
+      const user = { name: 'Michou', id: 489, votes: [] }
+      initializeTest(movies)
+      loginUser({ user })
+      voteForMovie({ movieId: 0, user })
+      expectUserState({ name: 'Michou', id: 489, votes: [{ movieId: 0 }] })
+    })
+    it('should NOT update user number of votes if user already voted', () => {
+      const movies = [{ Title: 'Once Upon a Time in Hollywood' }]
+      const user = { name: 'Michou', id: 489, votes: [] }
+      initializeTest(movies)
+      loginUser({ user })
+      voteForMovie({ movieId: 0, user })
+      voteForMovie({ movieId: 0, user })
+      expectUserState({ name: 'Michou', id: 489, votes: [{ movieId: 0 }] })
     })
   })
 
@@ -60,6 +79,10 @@ describe('voteForMovie', () => {
     store = createReduxStore({ moviesGateway })
     fetchMovies()
     initialState = store.getState()
+  }
+
+  const loginUser = user => {
+    store.dispatch(loginUserSucceeded(user))
   }
 
   const fetchMovies = () => {
@@ -71,9 +94,10 @@ describe('voteForMovie', () => {
   }
 
   const expectMoviesState = moviesState => {
-    expect(store.getState()).toEqual({
-      ...initialState,
-      movies: moviesState
-    })
+    expect(store.getState().movies).toEqual(moviesState)
+  }
+
+  const expectUserState = loggedUserState => {
+    expect(store.getState().loggedUser).toEqual(loggedUserState)
   }
 })

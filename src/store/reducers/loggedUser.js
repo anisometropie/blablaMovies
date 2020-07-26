@@ -1,4 +1,5 @@
 import { createRequestActions, generateCode } from 'utils/requestActions'
+import { VOTE_FOR_MOVIE_SUCCEEDED } from 'store/reducers/movies'
 
 export const {
   REGISTER_USER_REQUESTED,
@@ -34,6 +35,10 @@ export default (state = defaultState, action = {}) => {
     case LOGIN_USER_FAILED:
     case LOGOUT_USER:
       return defaultState
+    case VOTE_FOR_MOVIE_SUCCEEDED:
+      const { movieId } = action.payload
+      const previousVotes = state.votes ?? []
+      return { ...state, votes: [...previousVotes, { movieId }] }
     default:
       return state
   }
