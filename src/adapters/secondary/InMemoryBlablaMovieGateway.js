@@ -1,4 +1,4 @@
-import { of, throwError } from 'rxjs'
+import { from, of, throwError } from 'rxjs'
 
 export class InMemoryBlablaMovieGateway {
   constructor(movies = []) {
@@ -10,6 +10,25 @@ export class InMemoryBlablaMovieGateway {
 
   setMovies(movies = []) {
     this.movies = movies.map(this.parseMovie)
+  }
+
+  addMovie({ movieTitle }) {
+    if (this.movies.find(m => m.title === movieTitle) !== undefined) {
+      return throwError(new Error('This movie is already in the base'))
+    } else {
+      return from(
+        fetch(`http://www.omdbapi.com/?t=${movieTitle}&apikey=54a37ff8`)
+          .then(res => res.json())
+          .then(movie => {
+            const parsedMovie = this.parseMovie(movie)
+            this.movies = [...this.movies, parsedMovie]
+            return this.movies
+          })
+          .catch(error => {
+            return error
+          })
+      )
+    }
   }
 
   parseMovie = movie => {
