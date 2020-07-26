@@ -12,9 +12,14 @@ import Card from '../../base.ui/Card'
 import CurrentRanking from '../CurrentRanking'
 import logo from 'assets/logo.png'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
+  top: {
+    [theme.breakpoints.down(700)]: {
+      width: '80%'
+    }
+  },
   logo: { alignSelf: 'center' }
-})
+}))
 
 function Home() {
   const movies = useSelector(moviesSelectors.getState)
@@ -28,7 +33,7 @@ function Home() {
   const classes = useStyles()
   return (
     <React.Fragment>
-      <Card>
+      <Card className={classes.top}>
         <img className={classes.logo} src={logo} alt="" />
         <div>Chaque semaine, votez pour vos films préférés</div>
         <p>
