@@ -1,7 +1,8 @@
 import React from 'react'
 import { compose } from 'redux'
-import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
+import { withStyles } from '@material-ui/core/styles'
+import { isEmpty } from 'lodash'
 
 import {
   selectors as moviesSelectors,
@@ -10,6 +11,7 @@ import {
 } from 'store/reducers/movies'
 import { selectors as loggedUserSelectors } from 'store/reducers/loggedUser'
 
+import Snackbar from '../../base.ui/Snackbar'
 import MovieCard from '../MovieCard'
 
 const styles = {
@@ -24,7 +26,7 @@ const styles = {
 class MoviesList extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { selection: [] }
+    this.state = { selection: [], openSnackBar: false }
   }
   // ne fonctionne pas à l’intérieur d’un switch react-router?
   componentDidMount() {
@@ -34,15 +36,45 @@ class MoviesList extends React.Component {
 
   handleMovieVote = movieId => () => {
     const { user, voteForMovie } = this.props
-    voteForMovie(movieId, user)
+    if (isEmpty(user)) {
+      this.openSnackBar('Vous devez être connecté pour voter.')
+    } else if (user.votes.find(m => m.movieId === movieId) !== undefined) {
+      this.openSnackBar('Vous avez déjà voté pour ce film.')
+    } else if (user.votes.length >= 3) {
+      this.openSnackBar('Vous avez déjà voté pour 3 films.')
+    } else {
+      voteForMovie(movieId, user)
+    }
+  }
+
+  openSnackBar = message => {
+    this.setState({
+      openSnackBar: true,
+      snackbarMessage: message
+    })
+  }
+
+  handleCloseSnackbar = () => {
+    this.setState({ openSnackBar: false })
   }
 
   render() {
     const { classes, movies } = this.props
+    const { openSnackBar, snackbarMessage } = this.state
     const moviesElements = movies.map(m => (
       <MovieCard movie={m} onVote={this.handleMovieVote(m.id)} />
     ))
-    return <div className={classes.root}>{moviesElements}</div>
+    return (
+      <React.Fragment>
+        <div className={classes.root}>{moviesElements}</div>
+        <Snackbar
+          open={this.state.openSnackBar}
+          onClose={this.handleCloseSnackbar}
+          severity="info"
+          message={snackbarMessage}
+        />
+      </React.Fragment>
+    )
   }
 }
 
