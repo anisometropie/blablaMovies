@@ -6,6 +6,7 @@ import Navigation from './components/Navigation'
 import Home from './components/Home'
 import MoviesList from './components/MoviesList'
 import Register from './components/Register'
+import LogIn from './components/LogIn'
 
 // La société BlablaMovie souhaite donner la parole aux internautes en leur
 // permettant de choisir le film qu'ils préfèrent. Chaque utilisateur peut
@@ -26,7 +27,7 @@ function App() {
     <div className={classes.app}>
       <Navigation />
       <Switch>
-        <Route path="/login" exact render={() => <div>Login</div>} />
+        <Route path="/login" exact render={() => <LogIn />} />
         <Route path="/register" exact render={() => <Register />} />
         <Route path="/votes" exact render={() => <MoviesList />} />
         <Route path="/" exact render={Home} />

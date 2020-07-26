@@ -20,6 +20,11 @@ export const {
   loginUserRequestStateReducer
 } = createRequestActions('LOGIN_USER')
 
+const LOGOUT_USER = 'LOGOUT_USER'
+export const logoutUser = () => ({
+  type: LOGOUT_USER
+})
+
 export const defaultState = {}
 export default (state = defaultState, action = {}) => {
   switch (action.type) {
@@ -27,6 +32,7 @@ export default (state = defaultState, action = {}) => {
     case LOGIN_USER_SUCCEEDED:
       return action.payload.user
     case LOGIN_USER_FAILED:
+    case LOGOUT_USER:
       return defaultState
     default:
       return state

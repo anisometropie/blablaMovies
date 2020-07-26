@@ -4,9 +4,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import { isEmpty } from 'lodash'
 
-import { selectors as loggedUserSelectors } from 'store/reducers/loggedUser'
+import {
+  selectors as loggedUserSelectors,
+  logoutUser
+} from 'store/reducers/loggedUser'
 
-export const useStyles = makeStyles({
+const useStyles = makeStyles({
   navigationBar: {
     width: '100%',
     boxSizing: 'border-box',
@@ -35,7 +38,7 @@ function DashboardNavigation() {
   const classes = useStyles()
   const dispatch = useDispatch()
   const handleLogout = () => {
-    // dispatch()
+    dispatch(logoutUser())
   }
 
   return (
