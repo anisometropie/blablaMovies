@@ -40,6 +40,7 @@ function Home() {
           Vous pouvez sélectionner trois films. Au bout d’une semaine, les
           résultats sont annoncés.
         </p>
+        <p>Cette semaine, choisissez parmi les films de Quentin Tarantino</p>
       </Card>
       <CurrentRanking movies={movies} />
     </React.Fragment>
