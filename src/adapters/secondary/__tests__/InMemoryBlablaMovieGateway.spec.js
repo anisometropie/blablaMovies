@@ -10,7 +10,8 @@ describe('InMemoryBlablaMovieGateway', () => {
         {
           id: 0,
           username: 'Michou',
-          password: 'αβ'
+          password: 'αβ',
+          votes: []
         }
       ])
     })
@@ -18,8 +19,9 @@ describe('InMemoryBlablaMovieGateway', () => {
   describe('voteForMovie', () => {
     it('should add vote to movie if user hasn’t voted for it already', () => {
       const movies = [{ Title: 'Jeux interdits' }]
-      const user = { username: 'Michou', id: 3 }
+      const user = { username: 'Michou', id: 3, votes: [] }
       const gateway = new InMemoryBlablaMovieGateway(movies)
+      gateway.users = [user]
       gateway.voteForMovie({ movieId: 0, user })
       expect(gateway.movies).toEqual([
         {
@@ -32,8 +34,9 @@ describe('InMemoryBlablaMovieGateway', () => {
     })
     it('should NOT add vote to movie if user has voted for it already', () => {
       const movies = [{ Title: 'Jeux interdits' }]
-      const user = { username: 'Michou', id: 3 }
+      const user = { username: 'Michou', id: 3, votes: [] }
       const gateway = new InMemoryBlablaMovieGateway(movies)
+      gateway.users = [user]
       gateway.voteForMovie({ movieId: 0, user })
       gateway.voteForMovie({ movieId: 0, user })
       expect(gateway.movies).toEqual([

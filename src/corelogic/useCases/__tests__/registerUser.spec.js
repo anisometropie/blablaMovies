@@ -12,7 +12,7 @@ describe('registerUser', () => {
       const user = { username: 'Michou', password: 'γ' }
       initializeTest()
       registerUser(user)
-      expectUserState({ username: 'Michou', password: 'γ', id: 0 })
+      expectUserState({ username: 'Michou', password: 'γ', id: 0, votes: [] })
     })
   })
 

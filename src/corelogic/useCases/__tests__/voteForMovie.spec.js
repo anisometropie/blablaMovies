@@ -16,8 +16,8 @@ describe('voteForMovie', () => {
   describe('when user vote for a movie', () => {
     it('should update movie score', () => {
       const movies = [{ Title: 'Once Upon a Time in Hollywood' }]
-      const user = { name: 'Michou', id: 489 }
-      initializeTest(movies)
+      const user = { name: 'Michou', id: 489, votes: [] }
+      initializeTest(movies, [user])
       voteForMovie({ movieId: 0, user })
       expectMoviesState([
         {
@@ -35,8 +35,8 @@ describe('voteForMovie', () => {
         { Title: 'Reservoir Dog' },
         { Title: 'X files' }
       ]
-      const user = { name: 'Michou', id: 489 }
-      initializeTest(movies)
+      const user = { name: 'Michou', id: 489, votes: [] }
+      initializeTest(movies, [user])
       voteForMovie({ movieId: 2, user })
       expectMoviesState([
         {
@@ -58,7 +58,7 @@ describe('voteForMovie', () => {
     it('should update user number of votes', () => {
       const movies = [{ Title: 'Once Upon a Time in Hollywood' }]
       const user = { name: 'Michou', id: 489, votes: [] }
-      initializeTest(movies)
+      initializeTest(movies, [user])
       loginUser({ user })
       voteForMovie({ movieId: 0, user })
       expectUserState({ name: 'Michou', id: 489, votes: [{ movieId: 0 }] })
@@ -66,7 +66,7 @@ describe('voteForMovie', () => {
     it('should NOT update user number of votes if user already voted', () => {
       const movies = [{ Title: 'Once Upon a Time in Hollywood' }]
       const user = { name: 'Michou', id: 489, votes: [] }
-      initializeTest(movies)
+      initializeTest(movies, [user])
       loginUser({ user })
       voteForMovie({ movieId: 0, user })
       voteForMovie({ movieId: 0, user })
@@ -74,9 +74,11 @@ describe('voteForMovie', () => {
     })
   })
 
-  const initializeTest = movies => {
+  const initializeTest = (movies, users) => {
     moviesGateway = new InMemoryBlablaMovieGateway(movies)
     store = createReduxStore({ moviesGateway })
+    moviesGateway.users = users
+
     fetchMovies()
     initialState = store.getState()
   }
