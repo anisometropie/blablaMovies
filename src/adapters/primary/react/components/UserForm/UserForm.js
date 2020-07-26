@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { useSelector } from 'react-redux'
 import { TextField, Button } from '@material-ui/core'
 
 import Card from '../../base.ui/Card'

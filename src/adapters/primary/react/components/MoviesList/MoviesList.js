@@ -28,7 +28,6 @@ class MoviesList extends React.Component {
     super(props)
     this.state = { selection: [], openSnackBar: false }
   }
-  // ne fonctionne pas à l’intérieur d’un switch react-router?
   componentDidMount() {
     const { fetchMovies } = this.props
     fetchMovies()
@@ -68,7 +67,7 @@ class MoviesList extends React.Component {
       <React.Fragment>
         <div className={classes.root}>{moviesElements}</div>
         <Snackbar
-          open={this.state.openSnackBar}
+          open={openSnackBar}
           onClose={this.handleCloseSnackbar}
           severity="info"
           message={snackbarMessage}

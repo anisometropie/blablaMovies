@@ -1,4 +1,4 @@
-import { createRequestActions, generateCode } from 'utils/requestActions'
+import { createRequestActions } from 'utils/requestActions'
 
 export const {
   FETCH_MOVIES_REQUESTED,

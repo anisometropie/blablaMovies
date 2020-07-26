@@ -1,4 +1,4 @@
-import { ofType, StateObservable } from 'redux-observable'
+import { ofType } from 'redux-observable'
 import { map, switchMap } from 'rxjs/operators'
 
 import {

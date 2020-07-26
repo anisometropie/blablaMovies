@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Snackbar as MuiSnackbar, Slide } from '@material-ui/core'
+import { Snackbar as MuiSnackbar } from '@material-ui/core'
 import Alert from '@material-ui/lab/Alert'
 
 function Snackbar({ open, onClose, severity, message }) {

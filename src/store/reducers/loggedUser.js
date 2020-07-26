@@ -1,4 +1,4 @@
-import { createRequestActions, generateCode } from 'utils/requestActions'
+import { createRequestActions } from 'utils/requestActions'
 import { VOTE_FOR_MOVIE_SUCCEEDED } from 'store/reducers/movies'
 
 export const {
