@@ -17,10 +17,10 @@ const useStyles = makeStyles({
   }
 })
 
-function Card({ children, classeName }) {
+function Card({ children, className }) {
   const classes = useStyles()
   return (
-    <Paper className={classnames(classes.root, classeName)}>{children}</Paper>
+    <Paper className={classnames(classes.root, className)}>{children}</Paper>
   )
 }
 
