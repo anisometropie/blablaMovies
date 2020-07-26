@@ -18,20 +18,25 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    [theme.breakpoints.down(600)]: {
+    [theme.breakpoints.down(630)]: {
       justifyContent: 'center'
     },
-    [theme.breakpoints.down(470)]: {
-      flexDirection: 'column'
+    [theme.breakpoints.down(500)]: {
+      flexDirection: 'column',
+      marginTop: '5px',
+      padding: '8px 60px'
     }
   },
   item: {
     listStyle: 'none',
     margin: '0 16px',
-    [theme.breakpoints.between(470, 600)]: {
+    [theme.breakpoints.down(530)]: {
+      margin: '0 3px'
+    },
+    [theme.breakpoints.between(530, 570)]: {
       margin: '0 6px'
     },
-    [theme.breakpoints.between(500, 600)]: {
+    [theme.breakpoints.between(570, 630)]: {
       margin: '0 10px'
     }
   },
