@@ -11,7 +11,7 @@ function Register() {
 
   const handleSubmit = data => {
     dispatch(registerUserRequested(data))
-    history.push('/home')
+    history.push('/')
   }
 
   return (

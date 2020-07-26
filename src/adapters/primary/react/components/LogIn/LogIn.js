@@ -11,7 +11,7 @@ function LogIn() {
 
   const handleSubmit = data => {
     dispatch(loginUserRequested(data))
-    history.push('/home')
+    history.push('/')
   }
 
   return (
